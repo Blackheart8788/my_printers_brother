@@ -4,6 +4,31 @@ A Flutter plugin for printing on Brother label, receipt and mobile printers, plu
 
 This is a fork of [another_brother](https://github.com/CodeMinion/another_brother) by Rounin Labs. It bundles Brother Print SDK 4.13.2 and adds support for newer printers such as the RJ-4235B.
 
+## Migrating from another_brother
+
+1. Rename the dependency in your `pubspec.yaml`:
+   ```yaml
+   dependencies:
+     # Before
+     # another_brother: ^2.2.4
+     # After
+     my_printers_brother:
+       git:
+         url: https://github.com/Blackheart8788/my_printers_brother
+         ref: main
+   ```
+2. Update your imports:
+   ```dart
+   // Before
+   import 'package:another_brother/printer_info.dart';
+   // After
+   import 'package:my_printers_brother/printer_info.dart';
+   ```
+3. Raise your iOS deployment target to 14.0 and your Android `minSdkVersion` to 21 if they are lower.
+4. If you relied on Android native failures crashing the app or being ignored, handle `PlatformException` (see [Handle errors](#handle-errors)).
+
+The Dart API is otherwise unchanged. See [CHANGELOG.md](CHANGELOG.md) for the full list of changes in 3.0.0.
+
 ## Features
 
 | Connection | Android | iOS |
@@ -220,21 +245,6 @@ Each of these is marked "Available on Android only." in its documentation.
 ### iOS simulator
 
 TypeB printers are not available on the iOS simulator, because Brother's TypeB library (`libBROTHERSDK.a`) only supports devices. On the simulator, `TbPrinter.startCommunication()` returns `false`.
-
-## Migrating from another_brother
-
-1. Replace the `another_brother` dependency with `my_printers_brother` (see [Installation](#installation)).
-2. Update your imports:
-   ```dart
-   // Before
-   import 'package:another_brother/printer_info.dart';
-   // After
-   import 'package:my_printers_brother/printer_info.dart';
-   ```
-3. Raise your iOS deployment target to 14.0 and your Android `minSdkVersion` to 21 if they are lower.
-4. If you relied on Android native failures crashing the app or being ignored, handle `PlatformException` (see [Handle errors](#handle-errors)).
-
-The Dart API is otherwise unchanged. See [CHANGELOG.md](CHANGELOG.md) for the full list of changes in 3.0.0.
 
 ## Development
 
