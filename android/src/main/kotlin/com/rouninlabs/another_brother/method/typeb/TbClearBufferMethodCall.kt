@@ -9,18 +9,19 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for clearning.
  */
-class TbClearBufferMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result) {
+class TbClearBufferMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result, val scope: CoroutineScope) {
     companion object {
         const val METHOD_NAME = "typeB-clearBuffer"
     }
 
     fun execute() {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launchMethodCall(call, result) {
 
             val dartPrintInfo: HashMap<String, Any> = call.argument<HashMap<String, Any>>("printInfo")!!
             val printerId: String = call.argument<String>("printerId")!!
@@ -32,7 +33,7 @@ class TbClearBufferMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, va
                     // Set result Printer status.
                     result.success(false)
                 }
-                return@launch
+                return@launchMethodCall
             }
             // Clear buffer.
             val success = tbPrinter.clearBuffer()
@@ -42,7 +43,7 @@ class TbClearBufferMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, va
                     // Set result Printer status.
                     result.success(false)
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             // On Success track printer

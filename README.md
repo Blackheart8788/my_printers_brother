@@ -1,6 +1,21 @@
-# another_brother
+# my_printers_brother
 
-Another Bother SDK library for Flutter. For full demo app see Another-Brother-Demo-Prime https://github.com/CodeMinion/Demo-Another-Brother-Prime
+Brother printer SDK library for Flutter. A fork of [another_brother](https://github.com/CodeMinion/another_brother) by Rounin Labs. For a full demo app of the original plugin see Another-Brother-Demo-Prime https://github.com/CodeMinion/Demo-Another-Brother-Prime
+
+## Migrating from another_brother
+Rename the dependency in your `pubspec.yaml` and update your imports:
+```yaml
+dependencies:
+  my_printers_brother:
+    git: https://github.com/Blackheart8788/my_printers_brother
+```
+```dart
+// Before
+import 'package:another_brother/printer_info.dart';
+// After
+import 'package:my_printers_brother/printer_info.dart';
+```
+The Dart API is otherwise unchanged.
 
 ## Android Support
 - Bluetooth/BLE
@@ -11,8 +26,18 @@ Another Bother SDK library for Flutter. For full demo app see Another-Brother-De
 - Bluetooth/BLE
 - WiFi
 
+## Android-only APIs
+These `Printer` methods are not implemented on iOS and throw a `MissingPluginException` there:
+- Printer info: `getFirmVersion`, `getMediaVersion`, `getSerialNumber`, `getBatteryWeak`, `getBatteryInfo`, `getBootMode`, `getFirmFileVer`, `getMediaFileVer`, `getSystemReport`, `getLabelInfo`, `getLabelParam`, `getNetPrinterInfo`
+- Settings: `getPrinterSettings`, `updatePrinterSettings`, `getBluetoothPreference`, `updateBluetoothPreference`
+- P-touch Templates: `transfer`, `getTemplateList`, `removeTemplate`, `startPTTPrint`, `replaceText`, `replaceTextIndex`, `replaceTextName`, `flushPTTPrint`
+- Data transfer: `sendBinary`, `sendBinaryFile`, `sendDatabase`, `updateFirm`
+
 ## Android Min SDK
-- Requires minSdkVersion 19
+- Requires minSdkVersion 21
+
+## iOS Deployment Target
+- Requires iOS 14.0 or later (required by Brother Print SDK 4.13)
 
 ## iOS Info.plist
 
@@ -51,7 +76,8 @@ Add the following to your Info.plist
     	<!-- End Another Brother Section -->
 ```
 On your Runner make sure to mark: Allow non-modular includes as yes.
-Also make sure to mark the libBROTHERSDK.a as belonging to another_brother in xCode: https://www.youtube.com/watch?v=42dBVdXU8gk
+
+TypeB printers are not available on the iOS simulator, because Brother's TypeB library (libBROTHERSDK.a) only supports devices. On the simulator, `TbPrinter.startCommunication()` returns false.
 
 iOS Setup Video: https://www.youtube.com/watch?v=AcFnd-6hSew
 
@@ -67,7 +93,7 @@ App has not been authorized by the accessory manufacturer to work with the MFi a
 
 
 ## Apps Built with another_brother
-Have an app built using another_brother let me know and I will add it here!
+Apps built with the original another_brother plugin:
 
 - Easy Menu: https://www.youtube.com/watch?v=xy9qYo03pOQ
 - QR Storage: https://play.google.com/store/apps/details?id=com.rouninlabs.qrstorage

@@ -9,19 +9,20 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for starting a communication to a printer.
  * It will track the printer so it is available to print commands as well as close communication commands.
  */
-class StartCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result) {
+class StartCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result, val scope: CoroutineScope) {
     companion object {
         const val METHOD_NAME = "startCommunication"
     }
 
     fun execute() {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launchMethodCall(call, result) {
 
             val dartPrintInfo: HashMap<String, Any> = call.argument<HashMap<String, Any>>("printInfo")!!
             val printerId: String = call.argument<String>("printerId")!!
@@ -35,7 +36,7 @@ class StartCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAsset
                 withContext(Dispatchers.Main) {
                     result.success(true)
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             val printer = Printer()
@@ -48,7 +49,7 @@ class StartCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAsset
                     // Set result Printer status.
                     result.success(false)
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             // Set Printer Info

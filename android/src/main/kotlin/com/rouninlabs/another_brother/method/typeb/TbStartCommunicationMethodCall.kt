@@ -9,12 +9,13 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for starting a communication to a printer.
  * It will track the printer so it is available to print commands as well as close communication commands.
  */
-class TbStartCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result) {
+class TbStartCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result, val scope: CoroutineScope) {
     companion object {
         const val METHOD_NAME = "typeB-startCommunication"
     }
@@ -22,7 +23,7 @@ class TbStartCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAss
     fun execute() {
 
         // The TypeB SDK is wrapped around an Activity...
-        GlobalScope.launch(Dispatchers.Main) {
+        scope.launchMethodCall(call, result, Dispatchers.Main) {
 
             val dartPrintInfo: HashMap<String, Any> = call.argument<HashMap<String, Any>>("printInfo")!!
             //val printerId: String = call.argument<String>("printerId")!!
@@ -56,7 +57,7 @@ class TbStartCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAss
                     // Set result Printer status.
                     result.success("")
                 }
-                return@launch
+                return@launchMethodCall
             }
             // open connection
             //val success = tbPrinter.openPort()
@@ -71,7 +72,7 @@ class TbStartCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAss
                     // Set result Printer status.
                     result.success("")
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             val printerId = tbPrinter.getId()

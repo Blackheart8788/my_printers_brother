@@ -264,6 +264,9 @@ static NSObject<FlutterPluginRegistrar>* _registrarFlutter;
     else if([@"RJ_4250WB" isEqualToString:name]) {
         return BRLMPrinterModelRJ_4250WB;
     }
+    else if([@"RJ_4235B" isEqualToString:name]) {
+        return BRLMPrinterModelRJ_4235B;
+    }
     else if([@"TD_2030A" isEqualToString:name]) {
         return BRLMPrinterModelTD_2030A;
     }
@@ -1414,6 +1417,7 @@ static NSObject<FlutterPluginRegistrar>* _registrarFlutter;
              || printerModel == BRLMPrinterModelRJ_4040
              || printerModel == BRLMPrinterModelRJ_4230B
              || printerModel == BRLMPrinterModelRJ_4250WB
+             || printerModel == BRLMPrinterModelRJ_4235B
              ) {
         return [BrotherUtils rjPrintSettingsFromMapWithValue:map];
     }

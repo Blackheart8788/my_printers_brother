@@ -3,14 +3,15 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:another_brother/printer_info.dart';
-import 'package:another_brother/type_b_commands.dart';
+import 'package:my_printers_brother/printer_info.dart';
+import 'package:my_printers_brother/type_b_commands.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'label_info.dart';
+import 'src/ble_scan.dart';
 
 class TbPrinterInfo {
   String ipAddress;
@@ -759,35 +760,27 @@ class TbPrinter {
   /// Discover printers which are connectable via BLE. Available
   /// on Android 5.0 or later.
   Future<List<BLEPrinter>> getBLEPrinters({int timeout = 5000}) async {
-    //BLE Scanning
-    //FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
-
-    // Start scanning
-    FlutterBluePlus.startScan(
+    final List<ScanResult> results = await scanBle(
       // Note: For some reason it does not find the printer even though this is the service
       //withServices: [Guid("49535343-FE7D-4AE5-8FA9-9FAFD205E455"),
       // Guid("F0DD799C-C883-4976-96A5-8BB4907F41D6")
       //],
-        timeout: Duration(seconds: timeout ~/ 1000));
+        timeout: Duration(milliseconds: timeout));
 
-    Set<BLEPrinter> foundDevices = {};
-    // Listen to scan results
-    FlutterBluePlus.scanResults.listen((results) {
-      for (ScanResult r in results) {
-        debugPrint("Scan Result: ${r.device}");
+    // TbBlePrinter has no value equality, so de-duplicate by name.
+    final Map<String, BLEPrinter> foundDevices = {};
+    for (ScanResult r in results) {
+      debugPrint("Scan Result: ${r.device}");
 
-        BLEPrinter foundSt = BLEPrinter(localName: r.device.localName);
-        TbBlePrinter found = TbBlePrinter._(foundSt);
-
-        // For now just filter by device name until we get service working.
-        if (found.localName.startsWith(_printerInfo.printerModel.getName()) && !foundDevices.contains(found)) {
-          foundDevices.add(found);
-        }
+      final String localName = r.device.platformName;
+      // For now just filter by device name until we get service working.
+      if (localName.startsWith(_printerInfo.printerModel.getName())) {
+        foundDevices.putIfAbsent(
+            localName, () => TbBlePrinter._(BLEPrinter(localName: localName)));
       }
-    });
+    }
 
-    return await Future.delayed(
-        Duration(seconds: timeout ~/ 1000), () => foundDevices.toList());
+    return foundDevices.values.toList();
   }
 }
 

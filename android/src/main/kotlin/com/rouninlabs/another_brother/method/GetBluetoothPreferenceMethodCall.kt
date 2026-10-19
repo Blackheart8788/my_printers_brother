@@ -12,20 +12,21 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for getting the bluetooth preference of a Brother printer.
  * This support both one-time as well as the standard openCommunication/print/closeCommunication
  * approach.
  */
-class GetBluetoothPreferenceMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result) {
+class GetBluetoothPreferenceMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result, val scope: CoroutineScope) {
     companion object {
         const val METHOD_NAME = "getBluetoothPreference"
     }
 
     fun execute() {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launchMethodCall(call, result) {
 
             val dartPrintInfo: HashMap<String, Any> = call.argument<HashMap<String, Any>>("printInfo")!!
             val printerId: String = call.argument<String>("printerId")!!
@@ -55,7 +56,7 @@ class GetBluetoothPreferenceMethodCall(val flutterAssets: FlutterPlugin.FlutterA
                             "btPre" to BluetoothPreference().toMap()
                     ))
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             // Set Printer Info

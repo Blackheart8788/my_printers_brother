@@ -1,5 +1,5 @@
 
-import 'package:another_brother/label_info.dart';
+import 'package:my_printers_brother/label_info.dart';
 
 abstract class ACustomPaper implements ALabelName {
   Map<String, dynamic> toMap();
@@ -11,7 +11,7 @@ class BinPaper_RJ2050 implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ2050Paper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ2050Paper";
   const BinPaper_RJ2050._internal(this._name, this._assetPath);
 
   static const RD_W50mm = const BinPaper_RJ2050._internal("RJ2050-RD50mm", "$_rootDir/RJ2050-RD50mm.bin");
@@ -55,7 +55,7 @@ class BinPaper_RJ2150 implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ2150Paper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ2150Paper";
   const BinPaper_RJ2150._internal(this._name, this._assetPath);
 
   static const RD_W2H4in = const BinPaper_RJ2150._internal("RJ2150-2x4in", "$_rootDir/RJ2150-2x4inch.bin");
@@ -107,7 +107,7 @@ class BinPaper_RJ3050Ai implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ3050AiPaper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ3050AiPaper";
   const BinPaper_RJ3050Ai._internal(this._name, this._assetPath);
 
   static const RD_W76mm = const BinPaper_RJ3050Ai._internal("RJ3050Ai-RD76mm", "$_rootDir/RJ3050Ai-RD76mm.bin");
@@ -155,7 +155,7 @@ class BinPaper_RJ3050 implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ3050Paper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ3050Paper";
   const BinPaper_RJ3050._internal(this._name, this._assetPath);
 
   static const RD_W1_9in = const BinPaper_RJ3050._internal("RJ3050-RD1.90inch", "$_rootDir/RJ3050-RD1.90inch.bin");
@@ -201,7 +201,7 @@ class BinPaper_RJ3150Ai implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ3150AiPaper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ3150AiPaper";
   const BinPaper_RJ3150Ai._internal(this._name, this._assetPath);
 
   static const RD_W76mm = const BinPaper_RJ3150Ai._internal("RJ3150Ai-RD76mm", "$_rootDir/RJ3150Ai-RD76mm.bin");
@@ -251,7 +251,7 @@ class BinPaper_RJ3150 implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ3150Paper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ3150Paper";
   const BinPaper_RJ3150._internal(this._name, this._assetPath);
 
   static const RD_W1H1in = const BinPaper_RJ3150._internal("RJ3150-RD1.0x1.0[1]", "$_rootDir/RJ3150-RD1.0x1.0[1].bin");
@@ -314,7 +314,7 @@ class BinPaper_RJ3230B implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ3230BPaper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ3230BPaper";
   const BinPaper_RJ3230B._internal(this._name, this._assetPath);
 
   static const RD_W76mm = const BinPaper_RJ3230B._internal("RJ-3230B-RD76mm", "$_rootDir/RJ-3230B-RD76mm.bin");
@@ -356,7 +356,7 @@ class BinPaper_RJ3250WB implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ3250WBPaper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ3250WBPaper";
   const BinPaper_RJ3250WB._internal(this._name, this._assetPath);
 
   static const RD_W76mm = const BinPaper_RJ3250WB._internal("RJ-3250WB-RD76mm", "$_rootDir/RJ-3250WB-RD76mm.bin");
@@ -398,7 +398,7 @@ class BinPaper_RJ4030 implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ4030Paper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ4030Paper";
   const BinPaper_RJ4030._internal(this._name, this._assetPath);
 
   //static const RD_W80H115mm = const BinPaper_RJ4030._internal("RJ4030Ai-RD80_115mm", "$_rootDir/RJ4030Ai-RD80_115mm.bin");
@@ -456,7 +456,7 @@ class BinPaper_RJ4030Ai implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ4030AiPaper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ4030AiPaper";
   const BinPaper_RJ4030Ai._internal(this._name, this._assetPath);
 
   static const RD_W80H115mm = const BinPaper_RJ4030Ai._internal("RJ4030Ai-RD80_115mm", "$_rootDir/RJ4030Ai-RD80_115mm.bin");
@@ -512,7 +512,7 @@ class BinPaper_RJ4040 implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ4040Paper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ4040Paper";
   const BinPaper_RJ4040._internal(this._name, this._assetPath);
 
   static const RD_W3in = const BinPaper_RJ4040._internal("RJ4040-RD3inch", "$_rootDir/RJ4040-RD3inch.bin");
@@ -575,7 +575,7 @@ class BinPaper_RJ4230 implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ4230Paper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ4230Paper";
   const BinPaper_RJ4230._internal(this._name, this._assetPath);
 
   static const RD_W1_9H3_3in = const BinPaper_RJ4230._internal("RJ4230B-RD1.9x3.3", "$_rootDir/RJ4230B-RD1.9x3.3.bin");
@@ -636,7 +636,7 @@ class BinPaper_RJ4250 implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomRJ4250Paper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomRJ4250Paper";
   const BinPaper_RJ4250._internal(this._name, this._assetPath);
 
   static const RD_W1_9H3_3in = const BinPaper_RJ4250._internal("RJ4250WB-RD1.9x3.3in", "$_rootDir/RJ4250WB-RD1.9x3.3.bin");
@@ -702,7 +702,7 @@ class BinPaper_TD2120N implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomTD2120NPaper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomTD2120NPaper";
   const BinPaper_TD2120N._internal(this._name, this._assetPath);
 
   static const RD_W1_1H1_1in = const BinPaper_TD2120N._internal("TD2120N-RD1.1x1.1", "$_rootDir/TD2120N-RD1.1x1.1.bin");
@@ -766,7 +766,7 @@ class BinPaper_TD2125N implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomTD2125NPaper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomTD2125NPaper";
   const BinPaper_TD2125N._internal(this._name, this._assetPath);
 
   static const W40_H40mm = const BinPaper_TD2125N._internal("TD2125N-40mm40mm", "$_rootDir/TD2125N-40mm40mm.bin");
@@ -810,7 +810,7 @@ class BinPaper_TD2125NWB implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomTD2125NWBPaper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomTD2125NWBPaper";
   const BinPaper_TD2125NWB._internal(this._name, this._assetPath);
 
   static const W40_H40mm = const BinPaper_TD2125NWB._internal("TD2125NWB-40mm40mm", "$_rootDir/TD2125NWB-40mm40mm.bin");
@@ -860,7 +860,7 @@ class BinPaper_TD2130N implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomTD2130NPaper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomTD2130NPaper";
   const BinPaper_TD2130N._internal(this._name, this._assetPath);
 
   static const RD_W1_1H1_1in = const BinPaper_TD2130N._internal("TD2130N-RD1.1x1.1", "$_rootDir/TD2130N-RD1.1x1.1.bin");
@@ -924,11 +924,11 @@ class BinPaper_TD2135NWB implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomTD2135NWBPaper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomTD2135NWBPaper";
   const BinPaper_TD2135NWB._internal(this._name, this._assetPath);
 
-  static const W40_H40mm = const BinPaper_TD2135NWB._internal("TD2135NWB-40mm40mm", "$_rootDir/TD2135NWB-40mm40mm.bin");
-  static const W57mm = const BinPaper_TD2135NWB._internal("TD2135NWB-57mm", "$_rootDir/TD2135NWB-57mm.bin");
+  static const W40_H40mm = const BinPaper_TD2135NWB._internal("TD2135NWB-40mm40mm", "$_rootDir/TD2135NWB-RD40x40mm.bin");
+  static const W57mm = const BinPaper_TD2135NWB._internal("TD2135NWB-57mm", "$_rootDir/TD2135NWB-RD57mm.bin");
 
   static const UNSUPPORTED = const BinPaper_TD2135NWB._internal("UNSUPPORTED", "");
 
@@ -967,7 +967,7 @@ class BinPaper_TD4550 implements ACustomPaper {
   final String _name;
   final String _assetPath;
 
-  static const String _rootDir = "packages/another_brother/custom_paper/CustomTD4550Paper";
+  static const String _rootDir = "packages/my_printers_brother/custom_paper/CustomTD4550Paper";
   const BinPaper_TD4550._internal(this._name, this._assetPath);
 
   static const RD_W2_2in = const BinPaper_TD4550._internal("TD4550DNWB-RD2.2inch", "$_rootDir/TD4550DNWB-RD2.2inch.bin");

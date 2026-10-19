@@ -9,18 +9,19 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for ending a communication to a printer.
  */
-class TbSetupMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result) {
+class TbSetupMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result, val scope: CoroutineScope) {
     companion object {
         const val METHOD_NAME = "typeB-setup"
     }
 
     fun execute() {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launchMethodCall(call, result) {
 
             val dartPrintInfo: HashMap<String, Any> = call.argument<HashMap<String, Any>>("printInfo")!!
             val printerId: String = call.argument<String>("printerId")!!
@@ -39,7 +40,7 @@ class TbSetupMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val cont
                     // Set result Printer status.
                     result.success(false)
                 }
-                return@launch
+                return@launchMethodCall
             }
             // Setup the label
             val success = tbPrinter.setup(width = width, height = height, density = density, sensor = sensor, sensor_distance = sensorDistance, sensor_offset = sensorOffset, speed = speed)
@@ -49,7 +50,7 @@ class TbSetupMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val cont
                     // Set result Printer status.
                     result.success(false)
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             // On Success track printer

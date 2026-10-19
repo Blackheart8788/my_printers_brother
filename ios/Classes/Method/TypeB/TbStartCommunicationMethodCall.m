@@ -44,7 +44,9 @@ static NSString * METHOD_NAME = @"typeB-startCommunication";
                     //|| printerInfo.port == BRLMChannelTypeBluetoothLowEnergy
                     || printerInfo.port == BRLMChannelTypeBluetoothMFi) {
                     // TODO Connect over WIFI
-                    printer = [BROTHERSDK new];
+                    // Looked up at runtime because libBROTHERSDK.a has no simulator slice,
+                    // so on the simulator this is nil and the connection fails gracefully.
+                    printer = [NSClassFromString(@"BROTHERSDK") new];
                 }
                 else {
                     printer = NULL;

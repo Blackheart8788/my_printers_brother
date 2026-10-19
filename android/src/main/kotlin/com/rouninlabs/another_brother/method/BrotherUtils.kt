@@ -441,12 +441,11 @@ fun setupConnectionManagers(context: Context, printInfo: PrinterInfo, printer: P
             Log.e(TAG, "USB not Connected")
             return PrinterInfo.ErrorCode.ERROR_BROTHER_PRINTER_NOT_FOUND
         }
-        // Check if the user has the permission to print to the device.
-        val hasPermission = usbManager.hasPermission(usbDevice)
-        if (!hasPermission) {
-            // Block until granted/denied
-            val granted = BrotherManager.requestUsbPermission(context = context, usbManager = usbManager, usbDevice = usbDevice)//.take()
-            
+        // Check if the user has the permission to print to the device, blocking until granted/denied.
+        val granted = BrotherManager.requestUsbPermission(context = context, usbManager = usbManager, usbDevice = usbDevice)
+        if (!granted) {
+            Log.e(TAG, "USB permission not granted")
+            return PrinterInfo.ErrorCode.ERROR_COMMUNICATION_ERROR
         }
     }
 

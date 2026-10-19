@@ -10,18 +10,19 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for ending a communication to a printer.
  */
-class TbEndCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result) {
+class TbEndCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result, val scope: CoroutineScope) {
     companion object {
         const val METHOD_NAME = "typeB-endCommunication"
     }
 
     fun execute() {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launchMethodCall(call, result) {
 
             val dartPrintInfo: HashMap<String, Any> = call.argument<HashMap<String, Any>>("printInfo")!!
             val printerId: String = call.argument<String>("printerId")!!
@@ -33,7 +34,7 @@ class TbEndCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAsset
                     // Set result Printer status.
                     result.success(printerId)
                 }
-                return@launch
+                return@launchMethodCall
             }
             // Close connection
             val success:Boolean = tbPrinter.closePort(timeout)
@@ -43,7 +44,7 @@ class TbEndCommunicationMethodCall(val flutterAssets: FlutterPlugin.FlutterAsset
                     // Set result Printer status.
                     result.success(printerId)
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             BrotherManager.untrackTypeBPrinter(printerId = tbPrinter.getId())

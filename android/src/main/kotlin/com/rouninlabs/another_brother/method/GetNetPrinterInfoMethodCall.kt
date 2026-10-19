@@ -10,20 +10,21 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for getting the info of a Brother printer that are connected to the network.
  * This support both one-time as well as the standard openCommunication/print/closeCommunication
  * approach.
  */
-class GetNetPrinterInfoMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result) {
+class GetNetPrinterInfoMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result, val scope: CoroutineScope) {
     companion object {
         const val METHOD_NAME = "getNetPrinterInfo"
     }
 
     fun execute() {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launchMethodCall(call, result) {
 
             val dartPrintInfo: HashMap<String, Any> = call.argument<HashMap<String, Any>>("printInfo")!!
             val printerId: String = call.argument<String>("printerId")!!
@@ -49,7 +50,7 @@ class GetNetPrinterInfoMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets
                     // Set result Printer status.
                     result.success(NetPrinter().toMap())
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             // Set Printer Info

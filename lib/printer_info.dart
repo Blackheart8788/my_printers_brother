@@ -8,6 +8,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'custom_paper.dart';
 import "label_info.dart";
 import 'bluetooth_preference.dart';
+import 'src/ble_scan.dart';
 
 class PaperSize implements ALabelName {
   final int _id;
@@ -186,6 +187,7 @@ class Model implements AModel {
   static final TD_2125NWB = Model._internal2("TD_2125NWB", 82, RJ_4030);
   static final TD_2135N = Model._internal2("TD_2135N", 83, RJ_4030);
   static final TD_2135NWB = Model._internal2("TD_2135NWB", 84, RJ_4030);
+  static final RJ_4235B = Model._internal2("RJ_4235B", 139, RJ_4030);
 
 
   static final UNSUPPORTED = Model._internal("UNSUPPORTED", 255,
@@ -275,6 +277,7 @@ class Model implements AModel {
     TD_2125NWB,
     TD_2135N,
     TD_2135NWB,
+    RJ_4235B,
     UNSUPPORTED
   ];
 
@@ -2790,6 +2793,7 @@ class Printer {
   /// The template file (*.pdz, *.blf) is created by P-touch Transfer Manager,
   /// a Windows application. For Bluetooth and USB transfers, use pdz files.
   /// For all interface, use blf files.
+  /// Available on Android only.
   Future<PrinterStatus> transfer(String filepath) async {
 
     var params = {
@@ -2805,6 +2809,8 @@ class Printer {
   }
 
 
+  /// Updates the printer firmware with the specified firmware file.
+  /// Available on Android only.
   Future<PrinterStatus> updateFirm(String filepath) async {
 
     var params = {
@@ -2824,6 +2830,7 @@ class Printer {
   /// Send the database data described in .csv format. In addition,
   /// Updates the database for printers that have templates and databases
   /// created and linked by P-touch Editor.
+  /// Available on Android only.
   //
   //.csv data format restrictions :
   //
@@ -2851,6 +2858,7 @@ class Printer {
   /// Send the binary file containing the command. Since the status check is
   /// not performed, it is sent even if the printer specified by printerModel
   /// is different from the actually connected printer.
+  /// Available on Android only.
   Future<PrinterStatus> sendBinaryFile(String filepath) async {
     var params = {
       "printerId": mPrinterId,
@@ -2868,6 +2876,7 @@ class Printer {
   /// Send the binary data containing the command. Since the status check
   /// is not performed, it is sent even if the printer specified by
   /// printerModel is different from the actually connected printer.
+  /// Available on Android only.
   Future<PrinterStatus> sendBinary(Uint8List data) async {
 
     var params = {
@@ -2882,6 +2891,7 @@ class Printer {
     return status;
   }
 
+  /// Available on Android only.
   Future<String> getFirmVersion() async {
     var params = {
       "printerId": mPrinterId,
@@ -2894,6 +2904,7 @@ class Printer {
   }
 
 
+  /// Available on Android only.
   Future<String> getMediaVersion() async {
     var params = {
       "printerId": mPrinterId,
@@ -2905,6 +2916,7 @@ class Printer {
     return mediaVersion;
   }
 
+  /// Available on Android only.
   Future<String> getSerialNumber() async {
     var params = {
       "printerId": mPrinterId,
@@ -2917,6 +2929,7 @@ class Printer {
   }
 
 
+  /// Available on Android only.
   Future<int> getBatteryWeak() async {
     var params = {
       "printerId": mPrinterId,
@@ -2929,6 +2942,7 @@ class Printer {
   }
 
 
+  /// Available on Android only.
   Future<int> getBootMode() async {
     var params = {
       "printerId": mPrinterId,
@@ -2941,6 +2955,7 @@ class Printer {
   }
 
 
+  /// Available on Android only.
   Future<String> getFirmFileVer(String filePath) async {
     var params = {
       "printerId": mPrinterId,
@@ -2953,6 +2968,7 @@ class Printer {
     return firmFileVersion;
   }
 
+  /// Available on Android only.
   Future<String> getMediaFileVer(String filePath) async {
     var params = {
       "printerId": mPrinterId,
@@ -2966,6 +2982,7 @@ class Printer {
   }
 
   /// Removes templates from the printer.
+  /// Available on Android only.
   Future<PrinterStatus> removeTemplate(List<int> keyList) async {
 
     var params = {
@@ -2982,6 +2999,7 @@ class Printer {
 
 
   /// Gets a list of the templates that have been downloaded to the printer.
+  /// Available on Android only.
   Future<PrinterStatus> getTemplateList(List<TemplateInfo> outTmplList) async {
 
     var params = {
@@ -3031,6 +3049,7 @@ class Printer {
   /// Some settings are not applied until the printer is restarted. Restart
   /// the printer, then confirm the values are properly applied via
   /// getPrinterSettings after the restart.
+  /// Available on Android only.
   Future<PrinterStatus> updatePrinterSettings(
       Map<PrinterSettingItem, String> settings) async {
 
@@ -3048,6 +3067,7 @@ class Printer {
   }
 
   /// Get printer settings. See Printer Configurations for available values.
+  /// Available on Android only.
   Future<PrinterStatus> getPrinterSettings(
       List<PrinterSettingItem> keys, Map<PrinterSettingItem, String> outValues) async {
 
@@ -3070,6 +3090,7 @@ class Printer {
 
   /// Retrieves the system report of the printer like self-print contents.
   /// Available if port is other than Port.NET.
+  /// Available on Android only.
   Future<String> getSystemReport() async {
     var params = {
       "printerId": mPrinterId,
@@ -3082,6 +3103,7 @@ class Printer {
   }
 
   /// Retrieves the battery information of the printer.
+  /// Available on Android only.
   Future<BatteryInfo> getBatteryInfo() async {
     var params = {
       "printerId": mPrinterId,
@@ -3096,6 +3118,7 @@ class Printer {
   }
 
   /// Gets Bluetooth settings from the MW series. Refer to BluetoothPreference.
+  /// Available on Android only.
   Future<PrinterStatus> getBluetoothPreference(BluetoothPreference btPre) async {
     var params = {
       "printerId": mPrinterId,
@@ -3117,6 +3140,7 @@ class Printer {
   /// Updates Bluetooth settings of the MW series. Refer to BluetoothPreference.
   /// This method does not check if the request has been reflected on the
   /// device. Please check using getBluetoothPreference if needed.
+  /// Available on Android only.
   Future<PrinterStatus> updateBluetoothPreference(BluetoothPreference btPre) async {
     var params = {
       "printerId": mPrinterId,
@@ -3137,6 +3161,7 @@ class Printer {
   /// Your application may not be able to print if the printer's settings
   /// differ from the defaults. If necessary, use the P-touch Template
   /// Setting Tool to configure the printer.
+  /// Available on Android only.
   Future<bool> startPTTPrint(int key, String encode) async {
     var params = {
       "printerId": mPrinterId,
@@ -3152,6 +3177,7 @@ class Printer {
 
   /// Replaces the next replaceable text in a P-touch Template.
   /// Text strings are replaced in order of small object number.
+  /// Available on Android only.
   Future<bool> replaceText(String data) async {
     var params = {
       "printerId": mPrinterId,
@@ -3167,6 +3193,7 @@ class Printer {
 
   /// Replaces the text in an object of a P-touch Template, specified by
   /// its object number.
+  /// Available on Android only.
   Future<bool> replaceTextIndex(String data, int index) async {
 
     var params = {
@@ -3184,6 +3211,7 @@ class Printer {
 
   /// Replaces the text in an object of a P-touch Template,
   /// specified by the object's name.
+  /// Available on Android only.
   Future<bool> replaceTextName(String data, String objectName) async {
 
     var params = {
@@ -3199,6 +3227,7 @@ class Printer {
   }
 
   /// Transmits command and print data used to print a P-touch Template.
+  /// Available on Android only.
   Future<PrinterStatus> flushPTTPrint() async {
     var params = {
       "printerId": mPrinterId,
@@ -3246,6 +3275,7 @@ class Printer {
   }
 
 
+  /// Available on Android only.
   Future<NetPrinter> getNetPrinterInfo(String ipAddress) async {
     var params = {
       "printerId": mPrinterId,
@@ -3261,6 +3291,7 @@ class Printer {
 
   /// Get the detail information of the media (for QL, PT, TD and RJ series)
   /// specified by setPrinterInfo.
+  /// Available on Android only.
   Future<LabelParam> getLabelParam() async {
 
     var params = {
@@ -3277,6 +3308,7 @@ class Printer {
 
   /// Retrieves the label information from the printer.
   /// Available for QL and PT series only.
+  /// Available on Android only.
   Future<LabelInfo> getLabelInfo() async {
 
     var params = {
@@ -3299,24 +3331,14 @@ class Printer {
 
     // TODO Consider moving this to iOS side.
     if (Platform.isIOS) {
-      //BLE Scanning
-      //FlutterBluePlus? flutterBlue = FlutterBluePlus();
+      final List<ScanResult> results = await scanBle(
+          withServices: [Guid("A76EB9E0-F3AC-4990-84CF-3A94D2426B2B")],
+          timeout: Duration(milliseconds: timeout));
 
-      // Start scanning
-      FlutterBluePlus.startScan(withServices: [Guid("A76EB9E0-F3AC-4990-84CF-3A94D2426B2B")], timeout: Duration(seconds: timeout~/1000));
-
-      Set<BLEPrinter> foundDevices = {};
-      // Listen to scan results
-      FlutterBluePlus.scanResults.listen((results) {
-        for (ScanResult r in results) {
-          BLEPrinter found = BLEPrinter(localName: r.device.localName);
-          if (!foundDevices.contains(found)) {
-            foundDevices.add(found);
-          }
-        }
-      });
-
-      return await Future.delayed(Duration(seconds: timeout~/1000), () => foundDevices.toList());
+      return results
+          .map((r) => BLEPrinter(localName: r.device.platformName))
+          .toSet()
+          .toList();
     }
 
     var params = {

@@ -9,18 +9,19 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for creating a barcode on the printer.
  */
-class TbBarcodeMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result) {
+class TbBarcodeMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result, val scope: CoroutineScope) {
     companion object {
         const val METHOD_NAME = "typeB-barcode"
     }
 
     fun execute() {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launchMethodCall(call, result) {
 
             val dartPrintInfo: HashMap<String, Any> = call.argument<HashMap<String, Any>>("printInfo")!!
             val printerId: String = call.argument<String>("printerId")!!
@@ -41,7 +42,7 @@ class TbBarcodeMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val co
                     // Set result Printer status.
                     result.success(false)
                 }
-                return@launch
+                return@launchMethodCall
             }
             // Setup the label
             val success = tbPrinter.barcode(x = x, y = y, height = height, human_readable = humanReadable, narrow = narrowBarRatio, wide = wideBarRatio, rotation = rotation, type = type, string = content )
@@ -51,7 +52,7 @@ class TbBarcodeMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val co
                     // Set result Printer status.
                     result.success(false)
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             // On Success track printer

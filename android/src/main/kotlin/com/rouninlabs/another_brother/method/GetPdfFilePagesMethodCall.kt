@@ -11,20 +11,21 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for getting the pages in a PDF to a Brother printer.
  * This support both one-time as well as the standard openCommunication/print/closeCommunication
  * approach.
  */
-class GetPdfFilePagesMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result) {
+class GetPdfFilePagesMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result, val scope: CoroutineScope) {
     companion object {
         const val METHOD_NAME = "getPDFFilePages"
     }
 
     fun execute() {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launchMethodCall(call, result) {
 
             val dartPrintInfo: HashMap<String, Any> = call.argument<HashMap<String, Any>>("printInfo")!!
             val printerId: String = call.argument<String>("printerId")!!
@@ -50,7 +51,7 @@ class GetPdfFilePagesMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, 
                     // Set result Printer status.
                     result.success(-1)
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             // Set Printer Info

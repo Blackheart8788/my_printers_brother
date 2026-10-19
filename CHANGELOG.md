@@ -149,3 +149,15 @@
 
 ## 2.2.4
 - Adds 16KB support for Android. Special thanks to swapnilparmar-git for the change.
+
+## 3.0.0
+- Renames the package from `another_brother` to `my_printers_brother`. Update your dependency and imports (`package:my_printers_brother/...`).
+- Upgrades the Brother Print SDK to 4.13.2 on Android and iOS. Requires iOS 14.0 or later and Android minSdkVersion 21.
+- Adds the RJ-4235B printer (`Model.RJ_4235B`).
+- The Brother SDKs are now bundled with the plugin instead of downloaded from external repositories.
+- Native errors on Android are reported to Dart as a `PlatformException` (code `NATIVE_ERROR`) instead of crashing the app.
+- Fixes USB printing hanging on Android 12+ while waiting for permission.
+- Registers `updateFirm` on Android.
+- Fixes BLE scanning leaking listeners, ignoring timeouts under 1 second and returning duplicate TypeB printers.
+- Links the TypeB library on iOS without manual Xcode steps. TypeB printers are not available on the iOS simulator.
+- Documents which methods are Android-only.

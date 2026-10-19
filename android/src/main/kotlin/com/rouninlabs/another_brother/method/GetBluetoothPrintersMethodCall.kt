@@ -11,6 +11,7 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for getting the Brother that are paired to the device..
@@ -19,7 +20,8 @@ class GetBluetoothPrintersMethodCall(
     val flutterAssets: FlutterPlugin.FlutterAssets,
     val context: Context,
     val call: MethodCall,
-    val result: MethodChannel.Result
+    val result: MethodChannel.Result,
+    val scope: CoroutineScope
 ) {
     companion object {
         const val METHOD_NAME = "getBluetoothPrinters"
@@ -27,7 +29,7 @@ class GetBluetoothPrintersMethodCall(
 
     fun execute() {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launchMethodCall(call, result) {
 
             val dartPrintInfo: HashMap<String, Any> =
                 call.argument<HashMap<String, Any>>("printInfo")!!
@@ -58,7 +60,7 @@ class GetBluetoothPrintersMethodCall(
                 withContext(Dispatchers.Main) {
                     result.success(arrayListOf<Map<String, Any>>())
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             // Set Printer Info

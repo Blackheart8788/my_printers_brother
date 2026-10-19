@@ -9,18 +9,19 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import com.rouninlabs.another_brother.launchMethodCall
 
 /**
  * Command for printing a label.
  */
-class TbPrintLabelMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result) {
+class TbPrintLabelMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val context: Context, val call: MethodCall, val result: MethodChannel.Result, val scope: CoroutineScope) {
     companion object {
         const val METHOD_NAME = "typeB-printLabel"
     }
 
     fun execute() {
 
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launchMethodCall(call, result) {
 
             val dartPrintInfo: HashMap<String, Any> = call.argument<HashMap<String, Any>>("printInfo")!!
             val printerId: String = call.argument<String>("printerId")!!
@@ -34,7 +35,7 @@ class TbPrintLabelMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val
                     // Set result Printer status.
                     result.success(false)
                 }
-                return@launch
+                return@launchMethodCall
             }
             // Setup the label
             val success = tbPrinter.printLabel(quantity = quantity, copy = copy)
@@ -44,7 +45,7 @@ class TbPrintLabelMethodCall(val flutterAssets: FlutterPlugin.FlutterAssets, val
                     // Set result Printer status.
                     result.success(false)
                 }
-                return@launch
+                return@launchMethodCall
             }
 
             // On Success track printer
