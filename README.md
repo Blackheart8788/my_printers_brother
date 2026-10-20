@@ -12,10 +12,7 @@ This is a fork of [another_brother](https://github.com/CodeMinion/another_brothe
      # Before
      # another_brother: ^2.2.4
      # After
-     my_printers_brother:
-       git:
-         url: https://github.com/Blackheart8788/my_printers_brother
-         ref: main
+     my_printers_brother: ^3.0.0
    ```
 2. Update your imports:
    ```dart
@@ -60,14 +57,17 @@ Added in this fork: **RJ-4235B** (`Model.RJ_4235B`).
 
 ## Installation
 
-Add the plugin to your `pubspec.yaml` as a git dependency:
+The plugin is published on [pub.dev](https://pub.dev/packages/my_printers_brother). Add it to your app:
+
+```sh
+flutter pub add my_printers_brother
+```
+
+Or add it to your `pubspec.yaml` yourself:
 
 ```yaml
 dependencies:
-  my_printers_brother:
-    git:
-      url: https://github.com/Blackheart8788/my_printers_brother
-      ref: main # or a specific commit, to pin a version
+  my_printers_brother: ^3.0.0
 ```
 
 ### Android setup
